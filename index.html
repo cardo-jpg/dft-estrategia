@@ -3,902 +3,377 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DFT Logística — Estratégia de Mídia Paga</title>
+<title>DFT Logística — Estratégia de Mídia Paga · Cardō Marketing</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Nunito+Sans:wght@400;600;700;800&display=swap');
 
-  :root {
-    --blue-dark: #0a1628;
-    --blue-mid: #0d2461;
-    --blue: #1a3fa0;
-    --blue-light: #2563eb;
-    --red: #dc2626;
-    --red-light: #ef4444;
-    --gold: #f59e0b;
-    --green: #10b981;
-    --white: #ffffff;
-    --gray-100: #f1f5f9;
-    --gray-200: #e2e8f0;
-    --gray-400: #94a3b8;
-    --gray-600: #475569;
-  }
+:root {
+  --blue:       #1e1f8c;
+  --blue-dark:  #16177a;
+  --blue-deep:  #0e0f60;
+  --blue-mid:   #2828a8;
+  --blue-light: #3535c0;
+  --orange:     #f07820;
+  --orange-light:#f9a05a;
+  --white:      #ffffff;
+  --white-80:   rgba(255,255,255,0.8);
+  --white-40:   rgba(255,255,255,0.4);
+  --white-15:   rgba(255,255,255,0.15);
+  --white-08:   rgba(255,255,255,0.08);
+  --white-05:   rgba(255,255,255,0.05);
+}
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+* { margin:0; padding:0; box-sizing:border-box; }
 
-  body {
-    font-family: 'Inter', sans-serif;
-    background: var(--blue-dark);
-    color: var(--white);
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
+body {
+  font-family: 'Nunito Sans', 'Nunito', sans-serif;
+  background: var(--blue);
+  color: var(--white);
+  overflow-x: hidden;
+}
 
-  /* ── HEADER ── */
-  .header {
-    background: linear-gradient(135deg, #0a1628 0%, #0d2461 50%, #0a1628 100%);
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-    padding: 40px 60px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: relative;
-    overflow: hidden;
-  }
-  .header::before {
-    content: '';
-    position: absolute;
-    top: -60px; right: -60px;
-    width: 300px; height: 300px;
-    background: radial-gradient(circle, rgba(220,38,38,0.15) 0%, transparent 70%);
-    border-radius: 50%;
-  }
-  .header::after {
-    content: '';
-    position: absolute;
-    bottom: -80px; left: 200px;
-    width: 400px; height: 400px;
-    background: radial-gradient(circle, rgba(37,99,235,0.12) 0%, transparent 70%);
-    border-radius: 50%;
-  }
-  .header-left { position: relative; z-index: 1; }
-  .header-tag {
-    display: inline-block;
-    background: var(--red);
-    color: white;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    padding: 4px 12px;
-    border-radius: 20px;
-    margin-bottom: 12px;
-  }
-  .header h1 {
-    font-size: 42px;
-    font-weight: 900;
-    line-height: 1.1;
-    letter-spacing: -1px;
-  }
-  .header h1 span { color: var(--red); }
-  .header p {
-    color: var(--gray-400);
-    font-size: 14px;
-    margin-top: 8px;
-    font-weight: 400;
-  }
-  .header-right {
-    position: relative; z-index: 1;
-    text-align: right;
-  }
-  .header-budget {
-    font-size: 48px;
-    font-weight: 900;
-    color: var(--white);
-    letter-spacing: -2px;
-    line-height: 1;
-  }
-  .header-budget-label {
-    font-size: 12px;
-    color: var(--gray-400);
-    font-weight: 500;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    margin-top: 4px;
-  }
+.wave-bg {
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 0; overflow: hidden; opacity: 0.04;
+}
+.wave-bg svg { width: 100%; height: 100%; }
 
-  /* ── MAIN ── */
-  .main { padding: 60px; }
+.topbar { background: var(--orange); height: 5px; width: 100%; }
 
-  /* ── SECTION TITLE ── */
-  .section-title {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--gray-400);
-    margin-bottom: 24px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .section-title::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: rgba(255,255,255,0.08);
-  }
+.header {
+  position: relative; z-index: 1;
+  background: linear-gradient(135deg, var(--blue-deep) 0%, var(--blue-dark) 60%, var(--blue-mid) 100%);
+  border-bottom: 1px solid var(--white-08);
+  padding: 48px 64px;
+  display: flex; align-items: center; justify-content: space-between; overflow: hidden;
+}
+.header-glow  { position:absolute; top:-80px; right:-80px; width:400px; height:400px; background:radial-gradient(circle,rgba(240,120,32,.2) 0%,transparent 65%); pointer-events:none; }
+.header-glow2 { position:absolute; bottom:-100px; left:300px; width:500px; height:300px; background:radial-gradient(circle,rgba(255,255,255,.05) 0%,transparent 70%); pointer-events:none; }
 
-  /* ── BUDGET OVERVIEW ── */
-  .budget-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    gap: 16px;
-    margin-bottom: 60px;
-  }
-  .budget-card {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 16px;
-    padding: 24px;
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.2s, border-color 0.2s;
-  }
-  .budget-card:hover {
-    transform: translateY(-3px);
-    border-color: rgba(255,255,255,0.18);
-  }
-  .budget-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-    border-radius: 16px 16px 0 0;
-  }
-  .budget-card.meta::before { background: linear-gradient(90deg, #1877f2, #42a5f5); }
-  .budget-card.google-brand::before { background: linear-gradient(90deg, #4285f4, #34a853, #fbbc04, #ea4335); }
-  .budget-card.google-demand::before { background: linear-gradient(90deg, #4285f4, #1a73e8); }
-  .budget-card.google-segment::before { background: linear-gradient(90deg, #34a853, #137333); }
-  .budget-card.total::before { background: linear-gradient(90deg, var(--red), var(--red-light)); }
+.logo { display:flex; align-items:center; gap:14px; margin-bottom:20px; }
+.logo-mark { width:52px; height:52px; background:var(--orange); border-radius:14px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.logo-mark svg { width:36px; height:36px; }
+.logo-name { font-family:'Nunito',sans-serif; font-size:24px; font-weight:900; letter-spacing:-.5px; }
+.logo-name span { color:var(--orange); }
+.logo-sub { font-size:10px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--orange); margin-top:2px; }
 
-  .budget-card-icon {
-    width: 36px; height: 36px;
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 18px;
-    margin-bottom: 16px;
-  }
-  .meta .budget-card-icon { background: rgba(24,119,242,0.2); }
-  .google-brand .budget-card-icon { background: rgba(66,133,244,0.2); }
-  .google-demand .budget-card-icon { background: rgba(26,115,232,0.2); }
-  .google-segment .budget-card-icon { background: rgba(52,168,83,0.2); }
-  .total .budget-card-icon { background: rgba(220,38,38,0.2); }
+.header-title { font-size:40px; font-weight:900; line-height:1.1; letter-spacing:-1px; }
+.header-title span { color:var(--orange); }
+.header-subtitle { font-size:14px; color:var(--white-40); margin-top:8px; font-weight:500; }
 
-  .budget-card-platform {
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--gray-400);
-    margin-bottom: 4px;
-  }
-  .budget-card-name {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--white);
-    margin-bottom: 16px;
-    line-height: 1.3;
-  }
-  .budget-card-value {
-    font-size: 28px;
-    font-weight: 900;
-    letter-spacing: -1px;
-    line-height: 1;
-  }
-  .budget-card-day {
-    font-size: 12px;
-    color: var(--gray-400);
-    margin-top: 4px;
-  }
-  .budget-bar {
-    margin-top: 16px;
-    height: 4px;
-    background: rgba(255,255,255,0.08);
-    border-radius: 4px;
-    overflow: hidden;
-  }
-  .budget-bar-fill {
-    height: 100%;
-    border-radius: 4px;
-    transition: width 1s ease;
-  }
-  .meta .budget-bar-fill { background: #1877f2; width: 13%; }
-  .google-brand .budget-bar-fill { background: #4285f4; width: 13%; }
-  .google-demand .budget-bar-fill { background: #1a73e8; width: 40%; }
-  .google-segment .budget-bar-fill { background: #34a853; width: 34%; }
-  .total .budget-bar-fill { background: var(--red); width: 100%; }
+.header-right { text-align:right; position:relative; z-index:1; }
+.budget-pill { background:var(--orange); border-radius:16px; padding:20px 32px; display:inline-block; }
+.budget-pill-value { font-size:44px; font-weight:900; letter-spacing:-2px; line-height:1; }
+.budget-pill-label { font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,.8); margin-top:4px; }
 
-  /* ── PLATFORM SECTIONS ── */
-  .platforms { display: grid; grid-template-columns: 1fr 2fr; gap: 24px; margin-bottom: 60px; }
+.main { position:relative; z-index:1; padding:56px 64px; }
 
-  /* META CARD */
-  .meta-card {
-    background: linear-gradient(160deg, #0d1f4a 0%, #0a1628 100%);
-    border: 1px solid rgba(24,119,242,0.25);
-    border-radius: 24px;
-    padding: 32px;
-    position: relative;
-    overflow: hidden;
-  }
-  .meta-card::before {
-    content: '';
-    position: absolute;
-    top: -40px; right: -40px;
-    width: 180px; height: 180px;
-    background: radial-gradient(circle, rgba(24,119,242,0.18) 0%, transparent 70%);
-    border-radius: 50%;
-  }
-  .platform-logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 24px;
-  }
-  .platform-logo-icon {
-    width: 42px; height: 42px;
-    border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 22px;
-    font-weight: 900;
-  }
-  .meta-logo { background: #1877f2; color: white; font-family: serif; font-style: italic; }
-  .platform-logo-name { font-size: 18px; font-weight: 800; }
-  .platform-logo-sub { font-size: 11px; color: var(--gray-400); font-weight: 400; }
+.section-header { display:flex; align-items:center; gap:14px; margin-bottom:28px; }
+.section-pill { background:var(--orange); color:white; font-size:10px; font-weight:800; letter-spacing:2px; text-transform:uppercase; padding:5px 14px; border-radius:20px; }
+.section-line { flex:1; height:1px; background:var(--white-08); }
 
-  .campaign-chip {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 20px;
-    padding: 6px 14px;
-    font-size: 12px;
-    font-weight: 600;
-    margin-bottom: 16px;
-  }
-  .chip-dot { width: 7px; height: 7px; border-radius: 50%; background: #1877f2; }
+/* BUDGET CARDS */
+.budget-row { display:grid; grid-template-columns:repeat(5,1fr); gap:14px; margin-bottom:56px; }
+.bcard { background:var(--white-05); border:1px solid var(--white-08); border-radius:20px; padding:24px; position:relative; overflow:hidden; transition:transform .2s,border-color .2s,background .2s; }
+.bcard:hover { transform:translateY(-4px); background:var(--white-08); border-color:var(--white-15); }
+.bcard::after { content:''; position:absolute; top:0; left:0; right:0; height:3px; border-radius:20px 20px 0 0; }
+.bcard.c1::after { background:#1877f2; }
+.bcard.c2::after { background:linear-gradient(90deg,#4285f4,#ea4335,#fbbc04,#34a853); }
+.bcard.c3::after { background:#1a73e8; }
+.bcard.c4::after { background:#34a853; }
+.bcard.c5::after { background:var(--orange); }
+.bcard-emoji { font-size:22px; margin-bottom:14px; display:block; }
+.bcard-platform { font-size:10px; font-weight:800; letter-spacing:2px; text-transform:uppercase; color:var(--white-40); margin-bottom:4px; }
+.bcard-name { font-size:13px; font-weight:700; margin-bottom:16px; line-height:1.3; }
+.bcard-value { font-size:28px; font-weight:900; letter-spacing:-1px; }
+.bcard.c5 .bcard-value { color:var(--orange); }
+.bcard-day { font-size:11px; color:var(--white-40); margin-top:3px; }
+.bcard-bar { margin-top:14px; height:3px; background:var(--white-08); border-radius:4px; }
+.bcard-bar-fill { height:100%; border-radius:4px; }
+.c1 .bcard-bar-fill { background:#1877f2; width:13%; }
+.c2 .bcard-bar-fill { background:#4285f4; width:13%; }
+.c3 .bcard-bar-fill { background:#1a73e8; width:40%; }
+.c4 .bcard-bar-fill { background:#34a853; width:34%; }
+.c5 .bcard-bar-fill { background:var(--orange); width:100%; }
 
-  .meta-stat-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 20px 0; }
-  .meta-stat {
-    background: rgba(255,255,255,0.04);
-    border-radius: 12px;
-    padding: 14px;
-  }
-  .meta-stat-label { font-size: 10px; color: var(--gray-400); font-weight: 600; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
-  .meta-stat-value { font-size: 18px; font-weight: 800; }
+/* DONUT */
+.donut-section { display:grid; grid-template-columns:320px 1fr; gap:48px; align-items:center; background:var(--white-05); border:1px solid var(--white-08); border-radius:24px; padding:44px; margin-bottom:56px; }
+.donut-wrap { position:relative; width:240px; height:240px; margin:0 auto; }
+.donut-wrap svg { transform:rotate(-90deg); }
+.donut-center { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); text-align:center; }
+.donut-center-val { font-size:30px; font-weight:900; letter-spacing:-1px; color:var(--orange); }
+.donut-center-lbl { font-size:10px; color:var(--white-40); font-weight:700; letter-spacing:2px; text-transform:uppercase; }
+.legend { display:flex; flex-direction:column; gap:16px; }
+.legend-title { font-size:22px; font-weight:900; margin-bottom:4px; }
+.legend-sub { font-size:13px; color:var(--white-40); margin-bottom:20px; }
+.legend-item { display:flex; align-items:center; gap:14px; }
+.legend-dot { width:12px; height:12px; border-radius:4px; flex-shrink:0; }
+.legend-name { font-size:13px; font-weight:600; flex:1; }
+.legend-pct { font-size:12px; color:var(--white-40); font-weight:700; min-width:36px; text-align:right; }
+.legend-val { font-size:14px; font-weight:900; min-width:70px; text-align:right; }
 
-  .tag-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
-  .tag {
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 8px;
-    padding: 5px 10px;
-    font-size: 11px;
-    font-weight: 500;
-    color: var(--gray-400);
-  }
-  .tag.highlight { background: rgba(24,119,242,0.15); border-color: rgba(24,119,242,0.3); color: #60a5fa; }
+/* PLATFORMS */
+.platform-grid { display:grid; grid-template-columns:1fr 2fr; gap:20px; margin-bottom:56px; }
+.meta-card { background:linear-gradient(160deg,#16178a 0%,var(--blue-deep) 100%); border:1px solid rgba(24,119,242,.3); border-radius:24px; padding:32px; position:relative; overflow:hidden; }
+.meta-card::before { content:''; position:absolute; top:-50px; right:-50px; width:200px; height:200px; background:radial-gradient(circle,rgba(24,119,242,.15) 0%,transparent 70%); pointer-events:none; }
+.plat-header { display:flex; align-items:center; gap:12px; margin-bottom:24px; }
+.plat-icon { width:44px; height:44px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:20px; font-weight:900; flex-shrink:0; }
+.plat-icon.meta { background:#1877f2; color:white; font-style:italic; font-family:serif; }
+.plat-name { font-size:18px; font-weight:800; }
+.plat-sub { font-size:11px; color:var(--white-40); }
+.chip { display:inline-flex; align-items:center; gap:6px; background:var(--white-05); border:1px solid var(--white-08); border-radius:20px; padding:5px 12px; font-size:11px; font-weight:700; margin-bottom:14px; }
+.chip-dot { width:7px; height:7px; border-radius:50%; }
+.stat-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:18px 0; }
+.stat-box { background:var(--white-05); border-radius:12px; padding:14px; }
+.stat-lbl { font-size:10px; color:var(--white-40); font-weight:700; letter-spacing:1px; text-transform:uppercase; margin-bottom:4px; }
+.stat-val { font-size:16px; font-weight:800; }
+.tags { display:flex; flex-wrap:wrap; gap:7px; margin-top:14px; }
+.tag { background:var(--white-05); border:1px solid var(--white-08); border-radius:8px; padding:4px 10px; font-size:11px; font-weight:600; color:var(--white-40); }
+.tag.hl { background:rgba(240,120,32,.15); border-color:rgba(240,120,32,.35); color:var(--orange-light); }
+.info-box { margin-top:18px; padding:14px; background:rgba(240,120,32,.1); border-left:3px solid var(--orange); border-radius:0 10px 10px 0; font-size:11px; color:var(--orange-light); line-height:1.6; font-style:italic; }
 
-  /* GOOGLE BLOCK */
-  .google-block {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-  .google-header {
-    background: linear-gradient(160deg, #0d1f4a 0%, #0a1628 100%);
-    border: 1px solid rgba(66,133,244,0.25);
-    border-radius: 24px;
-    padding: 24px 32px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .google-logo-row { display: flex; align-items: center; gap: 12px; }
-  .google-logo-circles { display: flex; gap: 3px; }
-  .g-circle { width: 14px; height: 14px; border-radius: 50%; }
-  .gc-blue { background: #4285f4; }
-  .gc-red { background: #ea4335; }
-  .gc-yellow { background: #fbbc04; }
-  .gc-green { background: #34a853; }
+.google-block { display:flex; flex-direction:column; gap:16px; }
+.google-topbar { background:var(--white-05); border:1px solid var(--white-08); border-radius:20px; padding:22px 28px; display:flex; align-items:center; justify-content:space-between; }
+.g-circles { display:flex; gap:5px; align-items:center; }
+.gc { width:14px; height:14px; border-radius:50%; }
+.gc-b{background:#4285f4} .gc-r{background:#ea4335} .gc-y{background:#fbbc04} .gc-g{background:#34a853}
+.gcamps { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+.gcamp { border-radius:20px; padding:26px; position:relative; overflow:hidden; }
+.gcamp-brand { background:linear-gradient(160deg,#0f2060,#0a1540); border:1px solid rgba(66,133,244,.3); }
+.gcamp-demand { background:linear-gradient(160deg,#0a1848,#060f30); border:1px solid rgba(26,115,232,.3); }
+.gcamp-seg { background:linear-gradient(160deg,#0a2818,#060f0a); border:1px solid rgba(52,168,83,.3); }
+.gcamp-num { width:28px; height:28px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:900; margin-bottom:14px; }
+.gcamp-brand .gcamp-num { background:rgba(66,133,244,.2); color:#93c5fd; }
+.gcamp-demand .gcamp-num { background:rgba(26,115,232,.2); color:#60a5fa; }
+.gcamp-seg .gcamp-num { background:rgba(52,168,83,.2); color:#6ee7b7; }
+.gcamp-type { font-size:10px; font-weight:800; letter-spacing:2px; text-transform:uppercase; margin-bottom:5px; }
+.gcamp-brand .gcamp-type{color:#93c5fd} .gcamp-demand .gcamp-type{color:#60a5fa} .gcamp-seg .gcamp-type{color:#6ee7b7}
+.gcamp-title { font-size:15px; font-weight:800; margin-bottom:8px; line-height:1.3; }
+.gcamp-desc { font-size:11px; color:var(--white-40); line-height:1.5; margin-bottom:16px; }
+.kws { display:flex; flex-wrap:wrap; gap:6px; margin-top:12px; }
+.kw { background:var(--white-05); border:1px solid var(--white-08); border-radius:6px; padding:3px 8px; font-size:10px; color:var(--white-40); font-weight:600; }
+.gcamp-footer { display:flex; align-items:flex-end; justify-content:space-between; padding-top:16px; border-top:1px solid var(--white-05); margin-top:16px; }
+.gcamp-val { font-size:24px; font-weight:900; letter-spacing:-1px; }
+.gcamp-day { font-size:10px; color:var(--white-40); }
+.gcamp-tag { font-size:10px; font-weight:700; text-align:right; line-height:1.4; }
+.gcamp-brand .gcamp-tag{color:#93c5fd} .gcamp-demand .gcamp-tag{color:#60a5fa} .gcamp-seg .gcamp-tag{color:#6ee7b7}
 
-  .google-campaigns { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+/* FUNNEL */
+.funnel-wrap { background:var(--white-05); border:1px solid var(--white-08); border-radius:24px; padding:44px; display:grid; grid-template-columns:repeat(5,1fr); gap:0; align-items:center; margin-bottom:56px; }
+.funnel-step { text-align:center; position:relative; z-index:1; padding:0 8px; }
+.funnel-step:not(:last-child)::after { content:'→'; position:absolute; right:-16px; top:20px; font-size:22px; color:var(--white-15); }
+.funnel-icon { width:56px; height:56px; border-radius:16px; display:flex; align-items:center; justify-content:center; font-size:24px; margin:0 auto 14px; }
+.funnel-step:nth-child(1) .funnel-icon{background:rgba(240,120,32,.2)}
+.funnel-step:nth-child(2) .funnel-icon{background:rgba(66,133,244,.2)}
+.funnel-step:nth-child(3) .funnel-icon{background:rgba(240,120,32,.15)}
+.funnel-step:nth-child(4) .funnel-icon{background:rgba(52,168,83,.2)}
+.funnel-step:nth-child(5) .funnel-icon{background:rgba(240,120,32,.25)}
+.funnel-lbl { font-size:13px; font-weight:800; margin-bottom:6px; }
+.funnel-sub { font-size:11px; color:var(--white-40); line-height:1.4; }
 
-  .gcampaign {
-    border-radius: 20px;
-    padding: 28px;
-    position: relative;
-    overflow: hidden;
-  }
-  .gcampaign-brand {
-    background: linear-gradient(160deg, #0f2d6b 0%, #0a1e4a 100%);
-    border: 1px solid rgba(66,133,244,0.3);
-  }
-  .gcampaign-demand {
-    background: linear-gradient(160deg, #0a1e4a 0%, #061430 100%);
-    border: 1px solid rgba(26,115,232,0.3);
-  }
-  .gcampaign-segment {
-    background: linear-gradient(160deg, #0a2a18 0%, #061a10 100%);
-    border: 1px solid rgba(52,168,83,0.3);
-  }
+/* PERSONAS */
+.personas-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:56px; }
+.persona-card { border-radius:24px; padding:32px; border:1px solid var(--white-08); position:relative; overflow:hidden; }
+.p1 { background:linear-gradient(160deg,#22104a,var(--blue-deep)); border-color:rgba(240,120,32,.25); }
+.p2 { background:linear-gradient(160deg,#0a2230,var(--blue-deep)); border-color:rgba(52,168,83,.2); }
+.persona-badge { display:inline-flex; align-items:center; gap:8px; border-radius:20px; padding:6px 14px; font-size:11px; font-weight:800; letter-spacing:1px; text-transform:uppercase; margin-bottom:18px; }
+.p1 .persona-badge { background:rgba(240,120,32,.15); color:var(--orange-light); border:1px solid rgba(240,120,32,.3); }
+.p2 .persona-badge { background:rgba(52,168,83,.15); color:#6ee7b7; border:1px solid rgba(52,168,83,.3); }
+.persona-title { font-size:22px; font-weight:900; margin-bottom:4px; }
+.persona-roles { font-size:12px; color:var(--white-40); margin-bottom:22px; line-height:1.5; }
+.persona-cols { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.persona-col-title { font-size:10px; font-weight:800; letter-spacing:2px; text-transform:uppercase; margin-bottom:10px; }
+.p1 .persona-col-title{color:var(--orange-light)} .p2 .persona-col-title{color:#6ee7b7}
+.persona-item { font-size:11px; color:var(--white-40); margin-bottom:7px; padding-left:14px; position:relative; line-height:1.4; }
+.persona-item::before { content:'→'; position:absolute; left:0; }
+.p1 .persona-item::before{color:var(--orange)} .p2 .persona-item::before{color:#6ee7b7}
+.persona-insight { margin-top:18px; padding:14px; border-radius:10px; font-size:11px; line-height:1.6; font-style:italic; }
+.p1 .persona-insight { background:rgba(240,120,32,.08); color:var(--orange-light); border-left:3px solid var(--orange); }
+.p2 .persona-insight { background:rgba(52,168,83,.08); color:#6ee7b7; border-left:3px solid #34a853; }
 
-  .gcampaign-number {
-    width: 28px; height: 28px;
-    border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 13px;
-    font-weight: 800;
-    margin-bottom: 16px;
-  }
-  .gcampaign-brand .gcampaign-number { background: rgba(66,133,244,0.2); color: #93c5fd; }
-  .gcampaign-demand .gcampaign-number { background: rgba(26,115,232,0.2); color: #60a5fa; }
-  .gcampaign-segment .gcampaign-number { background: rgba(52,168,83,0.2); color: #6ee7b7; }
+/* SEGMENTS */
+.segs-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:56px; }
+.seg-card { background:var(--white-05); border:1px solid var(--white-08); border-radius:18px; padding:24px; text-align:center; transition:transform .2s,border-color .2s; }
+.seg-card:hover { transform:translateY(-4px); border-color:rgba(240,120,32,.35); }
+.seg-emoji { font-size:30px; margin-bottom:12px; display:block; }
+.seg-name { font-size:14px; font-weight:800; margin-bottom:8px; }
+.seg-kw { font-size:10px; color:var(--white-40); line-height:1.6; }
+.seg-badge { display:inline-block; margin-top:12px; font-size:9px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; padding:3px 10px; border-radius:20px; }
+.icp-a { background:rgba(240,120,32,.15); color:var(--orange-light); }
+.icp-b { background:var(--white-08); color:var(--white-40); }
 
-  .gcampaign-type {
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-bottom: 6px;
-  }
-  .gcampaign-brand .gcampaign-type { color: #93c5fd; }
-  .gcampaign-demand .gcampaign-type { color: #60a5fa; }
-  .gcampaign-segment .gcampaign-type { color: #6ee7b7; }
+/* KPIs */
+.kpi-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:56px; }
+.kpi-card { background:var(--white-05); border:1px solid var(--white-08); border-radius:18px; padding:24px; border-top:3px solid var(--orange); }
+.kpi-icon { font-size:22px; margin-bottom:12px; }
+.kpi-lbl { font-size:10px; color:var(--white-40); font-weight:700; letter-spacing:1px; text-transform:uppercase; margin-bottom:6px; }
+.kpi-target { font-size:20px; font-weight:900; color:var(--orange); margin-bottom:6px; }
+.kpi-desc { font-size:11px; color:var(--white-40); line-height:1.5; }
 
-  .gcampaign-title { font-size: 16px; font-weight: 800; margin-bottom: 8px; line-height: 1.3; }
-  .gcampaign-desc { font-size: 12px; color: var(--gray-400); line-height: 1.5; margin-bottom: 20px; }
-
-  .gcampaign-budget {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    padding-top: 20px;
-    border-top: 1px solid rgba(255,255,255,0.06);
-  }
-  .gcampaign-budget-value { font-size: 26px; font-weight: 900; letter-spacing: -1px; }
-  .gcampaign-budget-day { font-size: 11px; color: var(--gray-400); }
-
-  .kw-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
-  .kw {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 6px;
-    padding: 4px 8px;
-    font-size: 10px;
-    color: var(--gray-400);
-    font-weight: 500;
-  }
-
-  /* ── AUDIENCE MAP ── */
-  .audience-section { margin-bottom: 60px; }
-  .audience-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-
-  .persona-card {
-    border-radius: 20px;
-    padding: 32px;
-    position: relative;
-    overflow: hidden;
-  }
-  .persona-1 {
-    background: linear-gradient(160deg, #1a1a2e 0%, #0a1628 100%);
-    border: 1px solid rgba(220,38,38,0.25);
-  }
-  .persona-2 {
-    background: linear-gradient(160deg, #1a1a2e 0%, #0a1628 100%);
-    border: 1px solid rgba(245,158,11,0.25);
-  }
-  .persona-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    border-radius: 20px;
-    padding: 6px 14px;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    margin-bottom: 20px;
-  }
-  .persona-1 .persona-badge { background: rgba(220,38,38,0.15); color: #fca5a5; border: 1px solid rgba(220,38,38,0.3); }
-  .persona-2 .persona-badge { background: rgba(245,158,11,0.15); color: #fcd34d; border: 1px solid rgba(245,158,11,0.3); }
-
-  .persona-title { font-size: 22px; font-weight: 800; margin-bottom: 4px; }
-  .persona-roles { font-size: 12px; color: var(--gray-400); margin-bottom: 24px; }
-
-  .persona-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  .persona-col-title { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; }
-  .persona-1 .persona-col-title { color: #fca5a5; }
-  .persona-2 .persona-col-title { color: #fcd34d; }
-
-  .persona-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 8px;
-    font-size: 12px;
-    color: var(--gray-400);
-    margin-bottom: 8px;
-    line-height: 1.4;
-  }
-  .persona-item::before {
-    content: '→';
-    font-size: 12px;
-    flex-shrink: 0;
-    margin-top: 0px;
-  }
-  .persona-1 .persona-item::before { color: #fca5a5; }
-  .persona-2 .persona-item::before { color: #fcd34d; }
-
-  .persona-insight {
-    margin-top: 20px;
-    padding: 16px;
-    border-radius: 12px;
-    font-size: 12px;
-    line-height: 1.6;
-    font-style: italic;
-  }
-  .persona-1 .persona-insight { background: rgba(220,38,38,0.08); color: #fca5a5; border-left: 3px solid var(--red); }
-  .persona-2 .persona-insight { background: rgba(245,158,11,0.08); color: #fcd34d; border-left: 3px solid var(--gold); }
-
-  /* ── FUNNEL MAP ── */
-  .funnel-section { margin-bottom: 60px; }
-  .funnel-flow {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 0;
-    align-items: center;
-    background: rgba(255,255,255,0.02);
-    border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 24px;
-    padding: 40px;
-    overflow: hidden;
-    position: relative;
-  }
-  .funnel-step {
-    text-align: center;
-    position: relative;
-    z-index: 1;
-  }
-  .funnel-step:not(:last-child)::after {
-    content: '→';
-    position: absolute;
-    right: -20px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 20px;
-    color: rgba(255,255,255,0.2);
-    z-index: 2;
-  }
-  .funnel-icon {
-    width: 60px; height: 60px;
-    border-radius: 18px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 26px;
-    margin: 0 auto 14px;
-  }
-  .funnel-step:nth-child(1) .funnel-icon { background: rgba(245,158,11,0.15); }
-  .funnel-step:nth-child(2) .funnel-icon { background: rgba(66,133,244,0.15); }
-  .funnel-step:nth-child(3) .funnel-icon { background: rgba(220,38,38,0.15); }
-  .funnel-step:nth-child(4) .funnel-icon { background: rgba(16,185,129,0.15); }
-  .funnel-step:nth-child(5) .funnel-icon { background: rgba(139,92,246,0.15); }
-
-  .funnel-label { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
-  .funnel-sub { font-size: 11px; color: var(--gray-400); line-height: 1.4; }
-
-  /* ── SEGMENTS ── */
-  .segments-section { margin-bottom: 60px; }
-  .segments-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
-  .segment-card {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.07);
-    border-radius: 16px;
-    padding: 24px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.2s, border-color 0.2s;
-  }
-  .segment-card:hover {
-    transform: translateY(-4px);
-    border-color: rgba(255,255,255,0.15);
-  }
-  .segment-icon { font-size: 32px; margin-bottom: 12px; display: block; }
-  .segment-name { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
-  .segment-kw { font-size: 11px; color: var(--gray-400); line-height: 1.5; }
-  .segment-priority {
-    display: inline-block;
-    margin-top: 12px;
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    padding: 3px 10px;
-    border-radius: 20px;
-  }
-  .priority-a { background: rgba(220,38,38,0.15); color: #fca5a5; }
-  .priority-b { background: rgba(245,158,11,0.15); color: #fcd34d; }
-
-  /* ── KPI SECTION ── */
-  .kpi-section { margin-bottom: 60px; }
-  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
-  .kpi-card {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.07);
-    border-radius: 16px;
-    padding: 24px;
-  }
-  .kpi-icon { font-size: 24px; margin-bottom: 12px; }
-  .kpi-metric { font-size: 11px; color: var(--gray-400); font-weight: 600; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
-  .kpi-target { font-size: 22px; font-weight: 800; color: var(--white); margin-bottom: 4px; }
-  .kpi-desc { font-size: 11px; color: var(--gray-400); line-height: 1.4; }
-
-  /* ── DONUT CHART ── */
-  .chart-section {
-    display: grid;
-    grid-template-columns: 340px 1fr;
-    gap: 40px;
-    align-items: center;
-    background: rgba(255,255,255,0.02);
-    border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 24px;
-    padding: 40px;
-    margin-bottom: 60px;
-  }
-  .donut-wrap { position: relative; width: 260px; height: 260px; margin: 0 auto; }
-  .donut-wrap svg { transform: rotate(-90deg); }
-  .donut-center {
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-  }
-  .donut-center-value { font-size: 32px; font-weight: 900; letter-spacing: -1px; }
-  .donut-center-label { font-size: 11px; color: var(--gray-400); font-weight: 500; letter-spacing: 1px; text-transform: uppercase; }
-
-  .legend { display: flex; flex-direction: column; gap: 14px; }
-  .legend-item { display: flex; align-items: center; gap: 14px; }
-  .legend-color { width: 14px; height: 14px; border-radius: 4px; flex-shrink: 0; }
-  .legend-name { font-size: 13px; font-weight: 600; flex: 1; }
-  .legend-pct { font-size: 13px; font-weight: 700; color: var(--gray-400); }
-  .legend-value { font-size: 13px; font-weight: 800; }
-
-  /* ── FOOTER ── */
-  .footer {
-    background: rgba(255,255,255,0.02);
-    border-top: 1px solid rgba(255,255,255,0.06);
-    padding: 30px 60px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .footer-brand { font-size: 13px; font-weight: 700; color: var(--gray-400); }
-  .footer-brand span { color: var(--red); }
-  .footer-date { font-size: 12px; color: var(--gray-600); }
-
-  /* ── ANIMATED GRADIENT LINE ── */
-  .gradient-line {
-    height: 3px;
-    background: linear-gradient(90deg, var(--red), #4285f4, var(--green), var(--gold), var(--red));
-    background-size: 300% 100%;
-    animation: gradientMove 4s linear infinite;
-  }
-  @keyframes gradientMove {
-    0% { background-position: 0% 50%; }
-    100% { background-position: 300% 50%; }
-  }
-
-  .section-mb { margin-bottom: 60px; }
+/* FOOTER */
+.footer { position:relative; z-index:1; background:var(--blue-deep); border-top:1px solid var(--white-08); padding:28px 64px; display:flex; align-items:center; justify-content:space-between; }
+.footer-logo { display:flex; align-items:center; gap:10px; }
+.footer-logo-mark { width:36px; height:36px; background:var(--orange); border-radius:9px; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:16px; color:white; font-style:italic; font-family:serif; }
+.footer-logo-text { font-size:15px; font-weight:800; }
+.footer-logo-text span { color:var(--orange); }
+.footer-info { font-size:12px; color:var(--white-40); text-align:right; line-height:1.6; }
+.orange-bar { height:4px; background:var(--orange); width:100%; }
 </style>
 </head>
 <body>
 
-<div class="gradient-line"></div>
+<div class="wave-bg">
+  <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <pattern id="waves" x="0" y="0" width="120" height="120" patternUnits="userSpaceOnUse">
+        <path d="M0,60 C20,40 40,80 60,60 C80,40 100,80 120,60" stroke="white" stroke-width="3" fill="none"/>
+        <path d="M0,80 C20,60 40,100 60,80 C80,60 100,100 120,80" stroke="white" stroke-width="3" fill="none"/>
+        <path d="M0,40 C20,20 40,60 60,40 C80,20 100,60 120,40" stroke="white" stroke-width="3" fill="none"/>
+      </pattern>
+    </defs>
+    <rect width="1440" height="900" fill="url(#waves)"/>
+  </svg>
+</div>
 
-<!-- HEADER -->
+<div class="topbar"></div>
+
 <div class="header">
-  <div class="header-left">
-    <div class="header-tag">Estratégia de Mídia Paga · Abril 2026</div>
-    <h1>DFT <span>Logística</span><br>× Cardô Marketing</h1>
-    <p>Google Ads · Meta Ads · Distribuição de Verba · Personas · Segmentos</p>
+  <div class="header-glow"></div><div class="header-glow2"></div>
+  <div style="position:relative;z-index:1;">
+    <div class="logo">
+      <div class="logo-mark">
+        <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M28 8 L20 8 Q10 8 10 18 Q10 28 20 28 L28 28" stroke="white" stroke-width="4" stroke-linecap="round" fill="none"/>
+          <path d="M22 14 L28 14" stroke="white" stroke-width="3.5" stroke-linecap="round"/>
+          <path d="M22 22 L28 22" stroke="white" stroke-width="3.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="logo-text">
+        <div class="logo-name">cardō <span>marketing</span></div>
+        <div class="logo-sub">Estratégia de Mídia Paga</div>
+      </div>
+    </div>
+    <div class="header-title">DFT <span>Logística</span><br>Mapa Estratégico</div>
+    <div class="header-subtitle">Google Ads · Meta Ads · Personas · Segmentos · KPIs · Abril 2026</div>
   </div>
   <div class="header-right">
-    <div class="header-budget">R$3.000</div>
-    <div class="header-budget-label">Verba Mensal Total</div>
+    <div class="budget-pill">
+      <div class="budget-pill-value">R$3.000</div>
+      <div class="budget-pill-label">Verba Mensal Total</div>
+    </div>
   </div>
 </div>
 
-<!-- MAIN -->
 <div class="main">
 
-  <!-- BUDGET CARDS -->
-  <div class="section-title">Distribuição de Verba</div>
+  <div class="section-header"><div class="section-pill">Distribuição de Verba</div><div class="section-line"></div></div>
   <div class="budget-row">
-    <div class="budget-card meta">
-      <div class="budget-card-icon">𝑓</div>
-      <div class="budget-card-platform">Meta Ads</div>
-      <div class="budget-card-name">Brand Awareness</div>
-      <div class="budget-card-value">R$400</div>
-      <div class="budget-card-day">~R$13/dia</div>
-      <div class="budget-bar"><div class="budget-bar-fill"></div></div>
-    </div>
-    <div class="budget-card google-brand">
-      <div class="budget-card-icon">G</div>
-      <div class="budget-card-platform">Google Ads</div>
-      <div class="budget-card-name">Campanha de Marca</div>
-      <div class="budget-card-value">R$400</div>
-      <div class="budget-card-day">~R$13/dia</div>
-      <div class="budget-bar"><div class="budget-bar-fill"></div></div>
-    </div>
-    <div class="budget-card google-demand">
-      <div class="budget-card-icon">🔍</div>
-      <div class="budget-card-platform">Google Ads</div>
-      <div class="budget-card-name">Leads — Demanda Ativa</div>
-      <div class="budget-card-value">R$1.200</div>
-      <div class="budget-card-day">~R$40/dia</div>
-      <div class="budget-bar"><div class="budget-bar-fill"></div></div>
-    </div>
-    <div class="budget-card google-segment">
-      <div class="budget-card-icon">🎯</div>
-      <div class="budget-card-platform">Google Ads</div>
-      <div class="budget-card-name">Leads — Segmentos ICP</div>
-      <div class="budget-card-value">R$1.000</div>
-      <div class="budget-card-day">~R$33/dia</div>
-      <div class="budget-bar"><div class="budget-bar-fill"></div></div>
-    </div>
-    <div class="budget-card total">
-      <div class="budget-card-icon">💰</div>
-      <div class="budget-card-platform">Total Mensal</div>
-      <div class="budget-card-name">4 Campanhas Ativas</div>
-      <div class="budget-card-value">R$3.000</div>
-      <div class="budget-card-day">~R$100/dia</div>
-      <div class="budget-bar"><div class="budget-bar-fill"></div></div>
-    </div>
+    <div class="bcard c1"><span class="bcard-emoji">📘</span><div class="bcard-platform">Meta Ads</div><div class="bcard-name">Brand Awareness</div><div class="bcard-value">R$400</div><div class="bcard-day">~R$13 / dia</div><div class="bcard-bar"><div class="bcard-bar-fill"></div></div></div>
+    <div class="bcard c2"><span class="bcard-emoji">🔤</span><div class="bcard-platform">Google Ads</div><div class="bcard-name">Proteção de Marca</div><div class="bcard-value">R$400</div><div class="bcard-day">~R$13 / dia</div><div class="bcard-bar"><div class="bcard-bar-fill"></div></div></div>
+    <div class="bcard c3"><span class="bcard-emoji">🔍</span><div class="bcard-platform">Google Ads</div><div class="bcard-name">Leads — Demanda Ativa</div><div class="bcard-value">R$1.200</div><div class="bcard-day">~R$40 / dia</div><div class="bcard-bar"><div class="bcard-bar-fill"></div></div></div>
+    <div class="bcard c4"><span class="bcard-emoji">🎯</span><div class="bcard-platform">Google Ads</div><div class="bcard-name">Leads — Segmentos ICP</div><div class="bcard-value">R$1.000</div><div class="bcard-day">~R$33 / dia</div><div class="bcard-bar"><div class="bcard-bar-fill"></div></div></div>
+    <div class="bcard c5"><span class="bcard-emoji">💰</span><div class="bcard-platform">Total · 4 Campanhas</div><div class="bcard-name">Investimento Mensal</div><div class="bcard-value">R$3.000</div><div class="bcard-day">~R$100 / dia</div><div class="bcard-bar"><div class="bcard-bar-fill"></div></div></div>
   </div>
 
-  <!-- DONUT CHART -->
-  <div class="chart-section">
-    <div class="donut-wrap">
-      <svg width="260" height="260" viewBox="0 0 260 260">
-        <!-- Meta: 13.3% = 47.9° -->
-        <circle cx="130" cy="130" r="100" fill="none" stroke="#1877f2" stroke-width="36"
-          stroke-dasharray="83.7 545.3" stroke-dashoffset="0"/>
-        <!-- Google Brand: 13.3% = 47.9° -->
-        <circle cx="130" cy="130" r="100" fill="none" stroke="#4285f4" stroke-width="36"
-          stroke-dasharray="83.7 545.3" stroke-dashoffset="-83.7"/>
-        <!-- Google Demand: 40% = 144° -->
-        <circle cx="130" cy="130" r="100" fill="none" stroke="#1a73e8" stroke-width="36"
-          stroke-dasharray="251.3 377.7" stroke-dashoffset="-167.4"/>
-        <!-- Google Segment: 33.3% = 120° -->
-        <circle cx="130" cy="130" r="100" fill="none" stroke="#34a853" stroke-width="36"
-          stroke-dasharray="209.4 419.6" stroke-dashoffset="-418.7"/>
-      </svg>
-      <div class="donut-center">
-        <div class="donut-center-value">R$3k</div>
-        <div class="donut-center-label">/ mês</div>
+  <div class="section-header"><div class="section-pill">Alocação Visual</div><div class="section-line"></div></div>
+  <div class="donut-section">
+    <div>
+      <div class="donut-wrap">
+        <svg width="240" height="240" viewBox="0 0 240 240">
+          <circle cx="120" cy="120" r="90" fill="none" stroke="#1877f2" stroke-width="32" stroke-dasharray="75.4 489.6" stroke-dashoffset="0"/>
+          <circle cx="120" cy="120" r="90" fill="none" stroke="#4285f4" stroke-width="32" stroke-dasharray="75.4 489.6" stroke-dashoffset="-75.4"/>
+          <circle cx="120" cy="120" r="90" fill="none" stroke="#1a73e8" stroke-width="32" stroke-dasharray="226.2 338.8" stroke-dashoffset="-150.8"/>
+          <circle cx="120" cy="120" r="90" fill="none" stroke="#34a853" stroke-width="32" stroke-dasharray="188.5 376.5" stroke-dashoffset="-377"/>
+        </svg>
+        <div class="donut-center"><div class="donut-center-val">R$3k</div><div class="donut-center-lbl">/ mês</div></div>
       </div>
     </div>
     <div class="legend">
-      <div style="font-size:20px;font-weight:800;margin-bottom:8px;">Alocação de Verba</div>
-      <div style="font-size:12px;color:var(--gray-400);margin-bottom:20px;">Distribuição por campanha e plataforma</div>
-      <div class="legend-item">
-        <div class="legend-color" style="background:#1877f2;"></div>
-        <div class="legend-name">Meta — Brand Awareness</div>
-        <div class="legend-pct">13%</div>
-        <div class="legend-value">R$400</div>
-      </div>
-      <div class="legend-item">
-        <div class="legend-color" style="background:#4285f4;"></div>
-        <div class="legend-name">Google — Campanha de Marca</div>
-        <div class="legend-pct">13%</div>
-        <div class="legend-value">R$400</div>
-      </div>
-      <div class="legend-item">
-        <div class="legend-color" style="background:#1a73e8;"></div>
-        <div class="legend-name">Google — Demanda Ativa</div>
-        <div class="legend-pct">40%</div>
-        <div class="legend-value">R$1.200</div>
-      </div>
-      <div class="legend-item">
-        <div class="legend-color" style="background:#34a853;"></div>
-        <div class="legend-name">Google — Segmentos ICP</div>
-        <div class="legend-pct">34%</div>
-        <div class="legend-value">R$1.000</div>
-      </div>
+      <div class="legend-title">Distribuição por Campanha</div>
+      <div class="legend-sub">Verba alocada mensalmente por plataforma e objetivo</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#1877f2"></div><div class="legend-name">Meta — Brand Awareness</div><div class="legend-pct">13%</div><div class="legend-val">R$400</div></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#4285f4"></div><div class="legend-name">Google — Marca</div><div class="legend-pct">13%</div><div class="legend-val">R$400</div></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#1a73e8"></div><div class="legend-name">Google — Demanda Ativa</div><div class="legend-pct">40%</div><div class="legend-val">R$1.200</div></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#34a853"></div><div class="legend-name">Google — Segmentos ICP</div><div class="legend-pct">34%</div><div class="legend-val">R$1.000</div></div>
     </div>
   </div>
 
-  <!-- PLATFORMS -->
-  <div class="section-title">Campanhas</div>
-  <div class="platforms section-mb">
-
-    <!-- META -->
+  <div class="section-header"><div class="section-pill">Campanhas</div><div class="section-line"></div></div>
+  <div class="platform-grid">
     <div class="meta-card">
-      <div class="platform-logo">
-        <div class="platform-logo-icon meta-logo">f</div>
-        <div>
-          <div class="platform-logo-name">Meta Ads</div>
-          <div class="platform-logo-sub">Facebook · Instagram</div>
-        </div>
+      <div class="plat-header">
+        <div class="plat-icon meta">f</div>
+        <div><div class="plat-name">Meta Ads</div><div class="plat-sub">Facebook · Instagram</div></div>
       </div>
-
-      <div class="campaign-chip">
-        <div class="chip-dot"></div>
-        Proteção de Território
+      <div class="chip"><div class="chip-dot" style="background:#1877f2"></div> Proteção de Território</div>
+      <div style="font-size:15px;font-weight:800;margin-bottom:8px;">Brand Awareness</div>
+      <div style="font-size:12px;color:var(--white-40);line-height:1.6;">Campanha institucional de presença de marca. Não vende — posiciona. O decisor precisa reconhecer a DFT antes de precisar dela.</div>
+      <div class="stat-grid">
+        <div class="stat-box"><div class="stat-lbl">Orçamento</div><div class="stat-val">R$10/dia</div></div>
+        <div class="stat-box"><div class="stat-lbl">Objetivo</div><div class="stat-val">Alcance</div></div>
+        <div class="stat-box"><div class="stat-lbl">Formato</div><div class="stat-val" style="font-size:13px;">Vídeo + Carrossel</div></div>
+        <div class="stat-box"><div class="stat-lbl">Geo</div><div class="stat-val" style="font-size:13px;">SP · Sul · RJ</div></div>
       </div>
-
-      <div style="font-size:16px;font-weight:700;margin-bottom:8px;">Brand Awareness</div>
-      <div style="font-size:12px;color:var(--gray-400);line-height:1.6;">
-        Campanha institucional de presença de marca. Não vende — posiciona. O decisor precisa reconhecer a DFT antes de precisar dela.
-      </div>
-
-      <div class="meta-stat-row">
-        <div class="meta-stat">
-          <div class="meta-stat-label">Orçamento</div>
-          <div class="meta-stat-value">R$10/dia</div>
-        </div>
-        <div class="meta-stat">
-          <div class="meta-stat-label">Objetivo</div>
-          <div class="meta-stat-value">Alcance</div>
-        </div>
-        <div class="meta-stat">
-          <div class="meta-stat-label">Formatos</div>
-          <div class="meta-stat-value" style="font-size:14px;">Vídeo + Carrossel</div>
-        </div>
-        <div class="meta-stat">
-          <div class="meta-stat-label">Geo</div>
-          <div class="meta-stat-value" style="font-size:14px;">SP · Sul · RJ</div>
-        </div>
-      </div>
-
-      <div style="font-size:10px;color:var(--gray-400);font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">Segmentação de Cargos</div>
-      <div class="tag-list">
-        <span class="tag highlight">Diretor de Logística</span>
-        <span class="tag highlight">Gerente de Supply Chain</span>
-        <span class="tag highlight">Diretor Industrial</span>
+      <div style="font-size:10px;color:var(--white-40);font-weight:800;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">Segmentação de Cargos</div>
+      <div class="tags">
+        <span class="tag hl">Diretor de Logística</span>
+        <span class="tag hl">Gerente Supply Chain</span>
+        <span class="tag hl">Diretor Industrial</span>
         <span class="tag">Gestor de Compras</span>
-        <span class="tag">Coordenador de Operações</span>
+        <span class="tag">Coord. de Operações</span>
       </div>
-
-      <div style="margin-top:20px;padding:14px;background:rgba(220,38,38,0.08);border-left:3px solid var(--red);border-radius:8px;font-size:11px;color:#fca5a5;line-height:1.6;">
-        Tom: autoridade e confiabilidade — sem preço, sem urgência, sem amadorismo.
-      </div>
+      <div class="info-box">Tom: autoridade e confiabilidade — sem preço, sem urgência, sem amadorismo.</div>
     </div>
 
-    <!-- GOOGLE -->
     <div class="google-block">
-      <div class="google-header">
-        <div class="google-logo-row">
-          <div class="google-logo-circles">
-            <div class="g-circle gc-blue"></div>
-            <div class="g-circle gc-red"></div>
-            <div class="g-circle gc-yellow"></div>
-            <div class="g-circle gc-green"></div>
-          </div>
-          <div>
-            <div style="font-size:18px;font-weight:800;">Google Ads</div>
-            <div style="font-size:11px;color:var(--gray-400);">Search — 3 Campanhas · R$2.600/mês</div>
-          </div>
+      <div class="google-topbar">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div class="g-circles"><div class="gc gc-b"></div><div class="gc gc-r"></div><div class="gc gc-y"></div><div class="gc gc-g"></div></div>
+          <div><div style="font-size:17px;font-weight:800;">Google Ads</div><div style="font-size:11px;color:var(--white-40);">Search · 3 Campanhas · R$2.600/mês</div></div>
         </div>
-        <div style="text-align:right;">
-          <div style="font-size:24px;font-weight:900;">lp.dftlogistica.com.br</div>
-          <div style="font-size:11px;color:var(--gray-400);">Destino único · Formulário de proposta</div>
-        </div>
+        <div style="text-align:right;"><div style="font-size:13px;font-weight:800;color:var(--orange);">lp.dftlogistica.com.br</div><div style="font-size:11px;color:var(--white-40);">Destino único · Formulário pop-up</div></div>
       </div>
-
-      <div class="google-campaigns">
-
-        <!-- BRAND -->
-        <div class="gcampaign gcampaign-brand">
-          <div class="gcampaign-number">01</div>
-          <div class="gcampaign-type">Marca · Brand</div>
-          <div class="gcampaign-title">Proteção da Marca DFT</div>
-          <div class="gcampaign-desc">Aparece quando alguém busca pelo nome da DFT. Impede concorrentes de capturar leads da marca.</div>
-          <div class="kw-list">
-            <div class="kw">"DFT Logística"</div>
-            <div class="kw">"DFT transportadora"</div>
-            <div class="kw">"dftlogistica.com.br"</div>
-            <div class="kw">"DFT logistica SP"</div>
-          </div>
-          <div class="gcampaign-budget">
-            <div>
-              <div class="gcampaign-budget-value">R$400</div>
-              <div class="gcampaign-budget-day">~R$13/dia</div>
-            </div>
-            <div style="font-size:11px;color:#93c5fd;text-align:right;">CPC baixo<br>alta intenção</div>
-          </div>
+      <div class="gcamps">
+        <div class="gcamp gcamp-brand">
+          <div class="gcamp-num">01</div>
+          <div class="gcamp-type">Marca · Brand</div>
+          <div class="gcamp-title">Proteção da Marca DFT</div>
+          <div class="gcamp-desc">Aparece quando alguém busca pelo nome da DFT. Bloqueia concorrentes de capturar leads da marca.</div>
+          <div class="kws"><div class="kw">"DFT Logística"</div><div class="kw">"DFT transportadora"</div><div class="kw">"dftlogistica.com.br"</div><div class="kw">"DFT logistica SP"</div></div>
+          <div class="gcamp-footer"><div><div class="gcamp-val">R$400</div><div class="gcamp-day">~R$13/dia</div></div><div class="gcamp-tag">CPC baixo<br>alta intenção</div></div>
         </div>
-
-        <!-- DEMAND -->
-        <div class="gcampaign gcampaign-demand">
-          <div class="gcampaign-number">02</div>
-          <div class="gcampaign-type">Geração de Leads</div>
-          <div class="gcampaign-title">Demanda Ativa — São Paulo</div>
-          <div class="gcampaign-desc">Captura quem está buscando transportadora agora, sem conhecer a DFT. Alta intenção de compra.</div>
-          <div class="kw-list">
-            <div class="kw">"frete fracionado SP"</div>
-            <div class="kw">"transportadora B2B SP"</div>
-            <div class="kw">"carga fracionada interior SP"</div>
-            <div class="kw">"empresa logística São Paulo"</div>
-            <div class="kw">"transporte cargas complexas"</div>
-          </div>
-          <div class="gcampaign-budget">
-            <div>
-              <div class="gcampaign-budget-value">R$1.200</div>
-              <div class="gcampaign-budget-day">~R$40/dia</div>
-            </div>
-            <div style="font-size:11px;color:#60a5fa;text-align:right;">Principal<br>campanha</div>
-          </div>
+        <div class="gcamp gcamp-demand">
+          <div class="gcamp-num">02</div>
+          <div class="gcamp-type">Geração de Leads</div>
+          <div class="gcamp-title">Demanda Ativa — SP</div>
+          <div class="gcamp-desc">Captura quem busca transportadora agora sem conhecer a DFT. Alta intenção de compra.</div>
+          <div class="kws"><div class="kw">"frete fracionado SP"</div><div class="kw">"transportadora B2B SP"</div><div class="kw">"carga fracionada interior"</div><div class="kw">"logística São Paulo"</div><div class="kw">"transporte cargas complexas"</div></div>
+          <div class="gcamp-footer"><div><div class="gcamp-val">R$1.200</div><div class="gcamp-day">~R$40/dia</div></div><div class="gcamp-tag">Principal<br>campanha</div></div>
         </div>
-
-        <!-- SEGMENT -->
-        <div class="gcampaign gcampaign-segment">
-          <div class="gcampaign-number">03</div>
-          <div class="gcampaign-type">Geração de Leads · ICP</div>
-          <div class="gcampaign-title">Segmentos Estratégicos</div>
-          <div class="gcampaign-desc">Ads personalizados por nicho. Mensagem diferente para farmacêutico, têxtil, eletrônicos e saneantes.</div>
-          <div class="kw-list">
-            <div class="kw">"logística farmacêutica SP"</div>
-            <div class="kw">"transporte têxtil SP"</div>
-            <div class="kw">"frete eletrônicos SP"</div>
-            <div class="kw">"transporte saneantes SP"</div>
-          </div>
-          <div class="gcampaign-budget">
-            <div>
-              <div class="gcampaign-budget-value">R$1.000</div>
-              <div class="gcampaign-budget-day">~R$33/dia</div>
-            </div>
-            <div style="font-size:11px;color:#6ee7b7;text-align:right;">ICP A<br>alta conversão</div>
-          </div>
+        <div class="gcamp gcamp-seg">
+          <div class="gcamp-num">03</div>
+          <div class="gcamp-type">Leads · ICP</div>
+          <div class="gcamp-title">Segmentos Estratégicos</div>
+          <div class="gcamp-desc">Anúncios personalizados por nicho. Mensagem específica por segmento de atuação da DFT.</div>
+          <div class="kws"><div class="kw">"logística farmacêutica SP"</div><div class="kw">"transporte têxtil SP"</div><div class="kw">"frete eletrônicos SP"</div><div class="kw">"transporte saneantes SP"</div></div>
+          <div class="gcamp-footer"><div><div class="gcamp-val">R$1.000</div><div class="gcamp-day">~R$33/dia</div></div><div class="gcamp-tag">ICP A<br>alta conversão</div></div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- FUNIL -->
-  <div class="section-title">Jornada do Lead</div>
-  <div class="funnel-flow section-mb">
-    <div class="funnel-step">
-      <div class="funnel-icon">🎯</div>
-      <div class="funnel-label">Impacto</div>
-      <div class="funnel-sub">Anúncio no Google ou Meta aparece para o decisor certo</div>
-    </div>
-    <div class="funnel-step">
-      <div class="funnel-icon">🖥️</div>
-      <div class="funnel-label">LP</div>
-      <div class="funnel-sub">lp.dftlogistica.com.br com prova social e diferenciais</div>
-    </div>
-    <div class="funnel-step">
-      <div class="funnel-icon">📋</div>
-      <div class="funnel-label">Pop-up / Form</div>
-      <div class="funnel-sub">Solicita proposta personalizada pelo formulário</div>
-    </div>
-    <div class="funnel-step">
-      <div class="funnel-icon">📞</div>
-      <div class="funnel-label">Contato</div>
-      <div class="funnel-sub">Time comercial da DFT entra em contato em até 24h</div>
-    </div>
-    <div class="funnel-step">
-      <div class="funnel-icon">🤝</div>
-      <div class="funnel-label">Proposta</div>
-      <div class="funnel-sub">Proposta personalizada → contrato recorrente</div>
-    </div>
+  <div class="section-header"><div class="section-pill">Jornada do Lead</div><div class="section-line"></div></div>
+  <div class="funnel-wrap">
+    <div class="funnel-step"><div class="funnel-icon">🎯</div><div class="funnel-lbl">Impacto</div><div class="funnel-sub">Anúncio aparece para o decisor certo no canal certo</div></div>
+    <div class="funnel-step"><div class="funnel-icon">🖥️</div><div class="funnel-lbl">Landing Page</div><div class="funnel-sub">lp.dftlogistica.com.br com prova social e diferenciais</div></div>
+    <div class="funnel-step"><div class="funnel-icon">📋</div><div class="funnel-lbl">Formulário</div><div class="funnel-sub">Pop-up de proposta personalizada preenchido</div></div>
+    <div class="funnel-step"><div class="funnel-icon">📞</div><div class="funnel-lbl">Contato</div><div class="funnel-sub">Time comercial entra em contato em até 24h</div></div>
+    <div class="funnel-step"><div class="funnel-icon">🤝</div><div class="funnel-lbl">Contrato</div><div class="funnel-sub">Proposta → contrato recorrente de logística</div></div>
   </div>
 
-  <!-- PERSONAS -->
-  <div class="section-title">Personas Mapeadas</div>
-  <div class="audience-grid section-mb">
-    <div class="persona-card persona-1">
+  <div class="section-header"><div class="section-pill">Personas Mapeadas</div><div class="section-line"></div></div>
+  <div class="personas-grid">
+    <div class="persona-card p1">
       <div class="persona-badge">🛡️ Persona 1</div>
       <div class="persona-title">Decisor Estratégico</div>
       <div class="persona-roles">Diretor de Supply Chain · Diretor de Logística · Diretor Industrial · 40–55 anos</div>
@@ -915,14 +390,12 @@
           <div class="persona-item">Contratar um problema</div>
           <div class="persona-item">Comprometer a carreira</div>
           <div class="persona-item">Impacto financeiro invisível</div>
-          <div class="persona-item">Crescer e precisar trocar de transportadora</div>
+          <div class="persona-item">Crescer e ter que trocar de transportadora</div>
         </div>
       </div>
-      <div class="persona-insight">
-        "Ele não está buscando um transportador — está buscando proteção para a operação e para a própria carreira."
-      </div>
+      <div class="persona-insight">"Ele não está buscando um transportador — está buscando proteção para a operação e para a própria carreira."</div>
     </div>
-    <div class="persona-card persona-2">
+    <div class="persona-card p2">
       <div class="persona-badge">⚙️ Persona 2</div>
       <div class="persona-title">Influenciador Técnico</div>
       <div class="persona-roles">Gerente · Coordenador de Logística / Operações · 30–45 anos</div>
@@ -942,79 +415,36 @@
           <div class="persona-item">Perder reputação com a diretoria</div>
         </div>
       </div>
-      <div class="persona-insight">
-        "Quando encontra a transportadora certa, vira um defensor interno. A fidelidade começa quando ele 'brilha' para a diretoria."
-      </div>
+      <div class="persona-insight">"Quando encontra a transportadora certa, vira um defensor interno. A fidelidade começa quando ele brilha para a diretoria."</div>
     </div>
   </div>
 
-  <!-- SEGMENTOS -->
-  <div class="section-title">Segmentos Prioritários — Campanha 3</div>
-  <div class="segments-grid section-mb">
-    <div class="segment-card">
-      <span class="segment-icon">💊</span>
-      <div class="segment-name">Farmacêutico / Correlatos</div>
-      <div class="segment-kw">"transporte farmacêutico SP"<br>"logística correlatos São Paulo"</div>
-      <div class="segment-priority priority-a">ICP A — Prioritário</div>
-    </div>
-    <div class="segment-card">
-      <span class="segment-icon">📱</span>
-      <div class="segment-name">Eletrônicos / Alto Valor</div>
-      <div class="segment-kw">"frete eletrônicos SP"<br>"transporte carga alto valor"</div>
-      <div class="segment-priority priority-a">ICP A — Prioritário</div>
-    </div>
-    <div class="segment-card">
-      <span class="segment-icon">👕</span>
-      <div class="segment-name">Têxtil / Vestuário Premium</div>
-      <div class="segment-kw">"transportadora têxtil SP"<br>"frete vestuário São Paulo"</div>
-      <div class="segment-priority priority-b">ICP B — Escala Saudável</div>
-    </div>
-    <div class="segment-card">
-      <span class="segment-icon">🧴</span>
-      <div class="segment-name">Saneantes / Cosméticos</div>
-      <div class="segment-kw">"transporte saneantes SP"<br>"logística cosméticos São Paulo"</div>
-      <div class="segment-priority priority-b">ICP B — Escala Saudável</div>
-    </div>
+  <div class="section-header"><div class="section-pill">Segmentos Prioritários</div><div class="section-line"></div></div>
+  <div class="segs-grid">
+    <div class="seg-card"><span class="seg-emoji">💊</span><div class="seg-name">Farmacêutico / Correlatos</div><div class="seg-kw">"transporte farmacêutico SP"<br>"logística correlatos São Paulo"</div><div class="seg-badge icp-a">ICP A — Prioritário</div></div>
+    <div class="seg-card"><span class="seg-emoji">📱</span><div class="seg-name">Eletrônicos / Alto Valor</div><div class="seg-kw">"frete eletrônicos SP"<br>"transporte carga alto valor"</div><div class="seg-badge icp-a">ICP A — Prioritário</div></div>
+    <div class="seg-card"><span class="seg-emoji">👕</span><div class="seg-name">Têxtil / Vestuário Premium</div><div class="seg-kw">"transportadora têxtil SP"<br>"frete vestuário São Paulo"</div><div class="seg-badge icp-b">ICP B — Escala Saudável</div></div>
+    <div class="seg-card"><span class="seg-emoji">🧴</span><div class="seg-name">Saneantes / Cosméticos</div><div class="seg-kw">"transporte saneantes SP"<br>"logística cosméticos São Paulo"</div><div class="seg-badge icp-b">ICP B — Escala Saudável</div></div>
   </div>
 
-  <!-- KPIs -->
-  <div class="section-title">KPIs de Acompanhamento</div>
-  <div class="kpi-grid section-mb">
-    <div class="kpi-card">
-      <div class="kpi-icon">📊</div>
-      <div class="kpi-metric">CPL — Custo por Lead</div>
-      <div class="kpi-target">Meta: &lt; R$180</div>
-      <div class="kpi-desc">Custo por formulário preenchido na LP. Acompanhar semanalmente por campanha.</div>
-    </div>
-    <div class="kpi-card">
-      <div class="kpi-icon">🔁</div>
-      <div class="kpi-metric">Taxa de Conversão LP</div>
-      <div class="kpi-target">Meta: &gt; 3%</div>
-      <div class="kpi-desc">% de visitantes que preenchem o formulário. Indica qualidade do tráfego e da LP.</div>
-    </div>
-    <div class="kpi-card">
-      <div class="kpi-icon">👁️</div>
-      <div class="kpi-metric">Impressões de Marca</div>
-      <div class="kpi-target">Meta: 50k+/mês</div>
-      <div class="kpi-desc">Alcance da campanha de brand awareness no Meta. Mede presença de território.</div>
-    </div>
-    <div class="kpi-card">
-      <div class="kpi-icon">⭐</div>
-      <div class="kpi-metric">Qualidade do Lead (MQL)</div>
-      <div class="kpi-target">Meta: &gt; 60%</div>
-      <div class="kpi-desc">% de leads que atendem ao perfil ICP (cargo, empresa, segmento). Validar com time comercial.</div>
-    </div>
+  <div class="section-header"><div class="section-pill">KPIs de Acompanhamento</div><div class="section-line"></div></div>
+  <div class="kpi-grid">
+    <div class="kpi-card"><div class="kpi-icon">📊</div><div class="kpi-lbl">CPL — Custo por Lead</div><div class="kpi-target">Meta: &lt; R$180</div><div class="kpi-desc">Custo por formulário preenchido. Acompanhar semanalmente por campanha.</div></div>
+    <div class="kpi-card"><div class="kpi-icon">🔁</div><div class="kpi-lbl">Taxa de Conversão LP</div><div class="kpi-target">Meta: &gt; 3%</div><div class="kpi-desc">% de visitantes que preenchem o formulário. Indica qualidade do tráfego.</div></div>
+    <div class="kpi-card"><div class="kpi-icon">👁️</div><div class="kpi-lbl">Impressões de Marca</div><div class="kpi-target">Meta: 50k+/mês</div><div class="kpi-desc">Alcance da campanha de brand awareness no Meta. Mede presença de território.</div></div>
+    <div class="kpi-card"><div class="kpi-icon">⭐</div><div class="kpi-lbl">Qualidade do Lead MQL</div><div class="kpi-target">Meta: &gt; 60%</div><div class="kpi-desc">% de leads que atendem ao perfil ICP. Validar mensalmente com o time comercial.</div></div>
   </div>
 
 </div>
 
-<!-- FOOTER -->
 <div class="footer">
-  <div class="footer-brand">Cardô <span>Marketing</span> × DFT Logística</div>
-  <div class="footer-date">Estratégia · Abril 2026 · Verba inicial R$3.000/mês</div>
+  <div class="footer-logo">
+    <div class="footer-logo-mark">c</div>
+    <div class="footer-logo-text">cardō <span>marketing</span></div>
+  </div>
+  <div class="footer-info">Estratégia de Mídia Paga · DFT Logística · Abril 2026<br>Verba inicial: R$3.000/mês · Google Ads + Meta Ads</div>
 </div>
-
-<div class="gradient-line"></div>
+<div class="orange-bar"></div>
 
 </body>
 </html>
